@@ -15,6 +15,14 @@ public class BookDAO extends DataAccessObject<Book> {
     private static final String GET_ONE =
             "SELECT id, title, first_name, last_name " +
             "FROM books WHERE id = ?";
+
+    private static final String UPDATE =
+            "UPDATE books SET title = ?, first_name = ?, last_name = ? " +
+            "WHERE id = ?";
+
+    private static final String DELETE = "DELETE FROM books WHERE id = ?";
+
+
     public BookDAO(Connection connection) {
         super(connection);
     }
@@ -27,11 +35,11 @@ public class BookDAO extends DataAccessObject<Book> {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 customer.setId(rs.getLong("id"));
-                customer.setFirstName(rs.getString("title"));
+                customer.setTitle(rs.getString("title"));
                 customer.setFirstName(rs.getString("first_name"));
                 customer.setLastName(rs.getString("last_name"));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
@@ -45,7 +53,19 @@ public class BookDAO extends DataAccessObject<Book> {
 
     @Override
     public Book update(Book dto) {
-        return null;
+        Book book = null;
+        try (PreparedStatement statement = this.connection.prepareStatement(UPDATE);) {
+            statement.setString(1, dto.getTitle());
+            statement.setString(2, dto.getFirstName());
+            statement.setString(3, dto.getLastName());
+            statement.setLong(4, dto.getId());
+            statement.execute();
+            book = this.findById(dto.getId());
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return book;
     }
 
     @Override
@@ -65,6 +85,12 @@ public class BookDAO extends DataAccessObject<Book> {
 
     @Override
     public void delete(long id) {
-
+        try (PreparedStatement statement = this.connection.prepareStatement(DELETE);){
+            statement.setLong(1, id);
+            statement.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

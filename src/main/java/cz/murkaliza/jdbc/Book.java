@@ -15,7 +15,7 @@ public class Book implements DataTransferObject {
         this.id = id;
     }
     public String getTitle() {
-        return firstName;
+        return title;
     }
     public void setTitle(String title) {
         this.title = title;
@@ -32,4 +32,10 @@ public class Book implements DataTransferObject {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    @Override
+    public String toString() {
+        return id + " | " + title + " | " + firstName + " | " + lastName;
+    }
+
 }
