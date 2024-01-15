@@ -1,15 +1,19 @@
 package cz.murkaliza.diary;
 
-import cz.murkaliza.menu.TextMenuItem;
-import cz.murkaliza.menu.TextMenu;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import cz.murkaliza.jdbc.Book;
 import cz.murkaliza.jdbc.BookDAO;
 
-import java.sql.*;
+import cz.murkaliza.menu.TextMenuItem;
+import cz.murkaliza.menu.TextMenu;
 
 import java.util.Scanner;
+
 public class Diary {
+
     private static String dbName = "diary.db";
     private static Connection dbConnection;
 
@@ -129,6 +133,7 @@ public class Diary {
     private static final TextMenu topMenu = new TextMenu(
             "Current database " + dbName, false, true,
             subMenuList, subMenuFind, addBook, updateBook, deleteBook);
+
     public static void main(String... args) {
         try {
             System.out.println("Create (or open if exists) database:");
@@ -137,6 +142,7 @@ public class Diary {
             String filename = scanner.nextLine();
             if (!filename.trim().isEmpty()) { dbName = filename; }
             dbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+
             topMenu.run();
 
         } catch (SQLException e) {
