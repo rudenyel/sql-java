@@ -1,8 +1,6 @@
 package cz.murkaliza.diary;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 
 import cz.murkaliza.jdbc.Book;
 import cz.murkaliza.jdbc.BookDAO;
@@ -16,6 +14,17 @@ public class Diary {
 
     private static String dbName = "diary.db";
     private static Connection dbConnection;
+
+    private static final String CREATE_TABLE =
+            "CREATE TABLE IF NOT EXISTS books (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "title VARCHAR(127) CHECK(title != '')," +
+            "first_name VARCHAR(127) CHECK(first_name != '')," +
+            "last_name VARCHAR(127) CHECK(last_name != '')" +
+            ")";
+
+    private static final String CHECK_BOOK_TABLE =
+            "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'books'";
 
     private static final TextMenuItem listAsIs = new TextMenuItem("As is", new Runnable() {
         public void run() {
@@ -140,7 +149,13 @@ public class Diary {
             Scanner scanner = new Scanner(System.in);
             String filename = scanner.nextLine();
             if (!filename.trim().isEmpty()) { dbName = filename; }
+
             dbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+            Statement statement = dbConnection.createStatement();
+            ResultSet resultSet = statement.executeQuery(CHECK_BOOK_TABLE);
+            if (!resultSet.isBeforeFirst()) {
+                statement.executeQuery(CREATE_TABLE);
+            }
 
             topMenu.run();
 
