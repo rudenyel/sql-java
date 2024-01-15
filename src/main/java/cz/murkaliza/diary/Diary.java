@@ -120,7 +120,6 @@ public class Diary {
             scanner.nextLine();
             Book book = books.findById(id);
             books.delete(book.getId());
-
         }
     });
 

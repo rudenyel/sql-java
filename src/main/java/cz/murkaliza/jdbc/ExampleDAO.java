@@ -8,25 +8,13 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 
-public class Example {
+public class ExampleDAO {
 
     public static void main(String... args) {
         try {
 
-            // Simple JDBC lifecycle
+            // DAO lifecycle
             Connection connection = DriverManager.getConnection("jdbc:sqlite:diary.db");
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM books");
-            while (resultSet.next()) {
-                System.out.println("Total books: " + resultSet.getInt(1));
-            }
-            resultSet.close();
-            statement.close();
-            connection.close();
-
-
-            // DAO JDBC lifecycle
-            connection = DriverManager.getConnection("jdbc:sqlite:diary.db");
             BookDAO books = new BookDAO(connection);
 
             // Create book
