@@ -48,6 +48,9 @@ public class Example {
             // and then delete
             books.delete(new_book.getId());
 
+            // Print all books
+            books.findAll().forEach(System.out::println);
+
             connection.close();
 
         } catch (SQLException e) {
