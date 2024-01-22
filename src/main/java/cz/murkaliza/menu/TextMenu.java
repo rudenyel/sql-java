@@ -19,11 +19,6 @@ public class TextMenu extends TextMenuItem {
 
     List<TextMenuItem> items;
 
-//    public TextMenu(String title, TextMenuItem ... items) {
-//
-//        this(title, false, true, items);
-//    }
-
     public TextMenu(String title, boolean addBack, boolean addQuit, TextMenuItem ... items) {
         super(title);
         setExec(this);
@@ -69,9 +64,6 @@ public class TextMenu extends TextMenuItem {
                 item.run();
                 item = prompt();
             }
-
-//            for (TextMenuItem item = prompt(); item.isExec(); item = prompt())
-//                item.run();
         }
         catch (Throwable t) {
             t.printStackTrace(System.out);

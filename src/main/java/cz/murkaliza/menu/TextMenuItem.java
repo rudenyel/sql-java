@@ -1,7 +1,5 @@
 package cz.murkaliza.menu;
 
-import java.sql.Connection;
-
 public class TextMenuItem implements Runnable {
 
     private String title;

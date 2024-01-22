@@ -71,6 +71,7 @@ public class Diary {
         public void run() {
             BookDAO books = new BookDAO(dbConnection);
             Scanner scanner = new Scanner(System.in);
+
             Book book = new Book();
             System.out.print("Title > ");
             book.setTitle(scanner.nextLine());
@@ -78,6 +79,7 @@ public class Diary {
             book.setFirstName(scanner.nextLine());
             System.out.print("Last name > ");
             book.setLastName(scanner.nextLine());
+
             books.create(book);
         }
     });
@@ -87,16 +89,9 @@ public class Diary {
             BookDAO books = new BookDAO(dbConnection);
             Scanner scanner = new Scanner(System.in);
 
-            long id = 0;
             System.out.print("ID > ");
-            if (scanner.hasNextInt()) {
-                id = scanner.nextInt();
-            } else {
-                System.out.println("Incorrect input");
-                System.exit(0);
-            }
+            long id = Long.parseLong(scanner.nextLine());
 
-            scanner.nextLine();
             Book book = books.findById(id);
             System.out.print("Title > ");
             String title = scanner.nextLine();
@@ -117,16 +112,9 @@ public class Diary {
             BookDAO books = new BookDAO(dbConnection);
             Scanner scanner = new Scanner(System.in);
 
-            long id = 0;
             System.out.print("ID > ");
-            if (scanner.hasNextInt()) {
-                id = scanner.nextInt();
-            } else {
-                System.out.println("Incorrect input");
-                System.exit(0);
-            }
+            long id = Long.parseLong(scanner.nextLine());
 
-            scanner.nextLine();
             Book book = books.findById(id);
             books.delete(book.getId());
         }
