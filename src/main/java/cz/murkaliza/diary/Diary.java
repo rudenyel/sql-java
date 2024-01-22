@@ -133,10 +133,10 @@ public class Diary {
     });
 
     private static final TextMenu subMenuList = new TextMenu(
-            "List", true, false,
+            "List >", true, false,
             listAsIs, listSortedByAuthor, listSortedByTitle);
     private static final TextMenu subMenuFind = new TextMenu(
-            "Find", true, false,
+            "Find >", true, false,
             findByAuthor, findByTitle);
     private static final TextMenu topMenu = new TextMenu(
             "Current database " + dbName, false, true,
