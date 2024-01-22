@@ -154,7 +154,7 @@ public class Diary {
             Statement statement = dbConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(CHECK_BOOK_TABLE);
             if (!resultSet.isBeforeFirst()) {
-                statement.executeQuery(CREATE_TABLE);
+                statement.executeUpdate(CREATE_TABLE);
             }
 
             topMenu.run();
